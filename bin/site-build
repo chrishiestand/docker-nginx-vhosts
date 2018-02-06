@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+source_root="${1-}"
+dest_root="${2-}"
+search_path="${3-webroot}"
+
+if [ -z "$source_root" -o -z "$dest_root" ]; then
+    echo "usage: $0 source_root dest_root"
+    exit 1
+fi
+
+
+for site in "$source_root"/*; do
+
+    realpath_site="$(realpath $site)"
+    realpath_site_webroot="$realpath_site/$search_path"
+
+    site_name="$(basename $realpath_site)"
+
+    if [ -d "$realpath_site_webroot" ]; then
+        realpath_site="$realpath_site_webroot"
+    fi
+
+    cp -r "$realpath_site" "$dest_root/$site_name"
+
+done
