@@ -25,7 +25,8 @@ COPY etc/dhparam-snakeoil.pem /etc/nginx/ssl/dhparam.pem
 COPY etc/snakeoil.crt /opt/tls/san/tls.crt
 COPY etc/snakeoil.key /opt/tls/san/tls.key
 
-COPY etc/nginx-vhosts.conf /etc/nginx/nginx-http/vhosts.conf
+COPY etc/nginx-vhosts.conf /etc/nginx/nginx-http/00-vhosts.conf
+COPY etc/nginx-redirects.conf /etc/nginx/nginx-http/99-redirects.conf
 COPY etc/nginx-main-lua.conf /etc/nginx/nginx-main/lua.conf
 
 COPY --from=0 /dest_root /www
